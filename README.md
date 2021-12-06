@@ -8,7 +8,6 @@ Term: Fall 2021
 + Projec title: Lorem ipsum dolor sit amet
 + Team members
 
-	+ Chen, Caitlyn (ckc2143@columbia.edu)
 	+ Li, Spark (hl3431@columbia.edu)
 	+ Lu, Jing (jl5886@columbia.edu)
 	+ Venkatesh, Meghna (mv2849@columbia.edu)
