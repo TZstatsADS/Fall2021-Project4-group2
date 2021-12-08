@@ -2,3 +2,6 @@
 
 The data directory contains data used in the analysis. This is treated as read only; in paricular the R/python files are never allowed to write to the files in here. Depending on the project, these might be csv files, a database, and the directory itself may have subdirectories.
 
+**compas-scores-two-years.csv** is the raw data from COMPAS project. 
+
+**csty_filtered.csv** is the filtered one, which you can also find a copy in **output** folder.
