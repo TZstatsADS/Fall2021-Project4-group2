@@ -1,0 +1,43 @@
+---
+title: "Data Cleaning"
+author: "Spark"
+date: "12/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+```{r}
+raw_data <- read.csv("../data/compas-scores-two-years.csv")
+nrow(raw_data)
+```
+
+However not all of the rows are usable for analysis.
+
+There are a number of reasons remove rows because of missing data:
+* If the charge date of a defendants Compas scored crime was not within 30 days from when the person was arrested, we assume that because of data quality reasons, that we do not have the right offense;
+
+* In a similar vein, ordinary traffic offenses (i.e., those with a *c_charge_degree* of **O**) will not result in Jail are removed;
+
+```{r}
+df <- dplyr::select(raw_data, age, c_charge_degree, race, age_cat,
+                    score_text, sex, priors_count, days_b_screening_arrest,
+                    decile_score, is_recid, two_year_recid, c_jail_in,
+                    c_jail_out) %>%
+  filter(days_b_screening_arrest <= 30) %>%
+  filter(days_b_screening_arrest >= -30) %>%
+  filter(is_recid != -1) %>%
+  filter(c_charge_degree != "O") %>%
+  filter(score_text != "N/A")
+nrow(df)
+
+df$length_of_stay <- as.numeric(as.Date(df$c_jail_out) 
+                                -as.Date(df$c_jail_in))
+df <- df %>%
+  dplyr::select(-(c_jail_in:c_jail_out))
+write.csv(df, "../output/csty_filtered.csv")
+```
+
